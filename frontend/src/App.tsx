@@ -1,11 +1,24 @@
 import axios from 'axios';
-import { FileUp } from 'lucide-react';
+import { FileUp, Target } from 'lucide-react';
 import React, { useState } from 'react'
 // import { Input } from './components/ui/input'
 import { useContext } from 'react';
 import { ImageContext } from './contexts/ImageContext';
 
+//--------------Types Imports
+import { type CSSProperties } from 'react';
+
+//---------------Lucide Imports
+import { AlignLeft } from 'lucide-react';
+import { AlignCenter } from 'lucide-react';
+import { AlignRight } from 'lucide-react';
+import { AlignJustify } from 'lucide-react';
+
+
+
 const App = () => {
+  //-----------------------
+  type TextAlign = "left" | "center" | "right" | "justify"
 
   const [bgRemovedImg, setBgRemovedImg] = useState()
 
@@ -17,7 +30,15 @@ const App = () => {
   const [text, setText] = useState("")
   const [fontSize, setFontSize] = useState("")
   const [textColor, setTextColor] = useState("")
-  console.log(fontSize)
+  const [vertical, setVertical] = useState("")
+  const [horizontal, setHorizontal] = useState("")
+  const [font, setFont] = useState("")
+  const [textAlign, setTextAlign] = useState<TextAlign>()
+
+
+
+  //------------Fonts
+  const fonts = []
 
 
 
@@ -77,10 +98,12 @@ const App = () => {
 
           <div className=' bg-zinc-400 relative  w-1/2 p-4 overflow-hidden z-0'>
 
-            {/* Text in middle */}
-            <div className='z-2 absolute top-22  ' >
-              <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}` }} className={`font-bold inline-block leading-[100px] stroke-[1]`}>{text} </h1>
+            {/*--------------------- Text in middle----------------------------- */}
+            <div style={{ bottom: `${vertical}`, left: `${horizontal}`, textAlign: textAlign }} className='z-2 absolute ' >
+              <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontStyle: "normal", fontWeight: "bolder", lineHeight: "8rem" }} className=' '>{text} </h1>
             </div>
+
+
 
             {/* Acutal Image */}
             <img className='bg-bue-300  absolute top-0 z-1  ' src={`data:image/jpeg;base64,${actualImg}`} alt="actualImg" />
@@ -90,26 +113,56 @@ const App = () => {
 
           </div>
           {/* Controllers Div */}
-          <div className='w-1/2 bg-geen-500 p-4 flex flex-col justify-between items-end '>
-            <div className='flex flex-col gap-y-2' >
-              <div>
-                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Text</label>
-                <input onChange={(e) => { setText(e.target.value) }} className='border-1 border-black  text-black outline-none rounded-md' type="text" />
-              </div>
-              <div>
-                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Fonts</label>
-                <input className='border-1 border-black  text-black outline-none rounded-md' type="text" />
+          <div className=' text-black w-1/2  py-4 bg-rd-500  pl-12 flex flex-col justify-between items-start  bg-geen-400  '>
+
+            <div className='flex flex-col gap-y-8  bg-rd-500 ' >
+              <div >
+                <div>
+                  <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Text</label>
+                  <input onChange={(e) => { setText(e.target.value) }} className=' px-2 py-1 border-1 border-slate-400  text-black outline-none rounded-md ml-2 ' type="text" />
+                </div>
+                <div className='bg-re-500 flex justify-center gap-x-6 mt-1'>
+                  <button onClick={() => setTextAlign("left")} className='bg-zinc-300 px-1 rounded-md hover:bg-slate-700/30' ><AlignLeft /></button>
+                  <button onClick={() => setTextAlign("center")} className='bg-zinc-300 px-1 rounded-md hover:bg-slate-700/30' ><AlignCenter /></button>
+                  <button onClick={() => setTextAlign("right")} className='bg-zinc-300 px-1 rounded-md hover:bg-slate-700/30' ><AlignRight /></button>
+                </div>
               </div>
 
 
-              <div>
+              <div className='text-black'>
+                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900 ' htmlFor="">Fonts</label>
+                <select onChange={(e) => { setFont(e.target.value) }} className='px-2 py-1 border-1 border-slate-400  text-black outline-none rounded-md ml-2' name="" id="">
+                  <option value="Select Fonts">Select Fonts</option>
+
+                  <option style={{ fontFamily: 'sans-serif' }} value='sans-serif'>sans-serif</option>
+                  <option style={{ fontFamily: 'cursive' }} value='cursive'>Cursive</option>
+                  <option style={{ fontFamily: 'fantacy' }} value='fantacy'>Fantacy</option>
+                  <option style={{ fontFamily: 'monospace' }} value='monospace'>Monospace</option>
+                  <option style={{ fontFamily: 'revert' }} value='revert'>Revert</option>
+                </select>
+
+              </div>
+
+              <div className='flex items-center'>
                 <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Color</label>
-                <input onChange={(e) => setTextColor(e.target.value)} className='border-1 border-black  text-black outline-none rounded-md' type="color" />
+                <input onChange={(e) => setTextColor(e.target.value)} className=' text-black outline-none ml-2  ' type="color" />
               </div>
 
               <div>
                 <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Font Size</label>
-                <input onChange={(e) => setFontSize(e.target.value + "px")} className='border-1 border-black  text-black outline-none rounded-md' type="range" />
+                <input onChange={(e) => setFontSize(e.target.value + "px")} className='border-1 border-black  text-black outline-none rounded-md ml-2  accent-black  ' type="range" />
+              </div>
+
+
+              {/* ---------------------------Alignment Controllers----------------- */}
+              <div>
+                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Align Vertial</label>
+                <input onChange={(e) => setVertical(e.target.value + "%")} max={100} min={-100} className='border-1 border-black  text-black outline-none rounded-md ml-2 accent-black' type="range" />
+              </div>
+
+              <div>
+                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Align Horizontal</label>
+                <input onChange={(e) => setHorizontal(e.target.value + "%")} max={100} min={-100} className='border-1 border-black  text-black outline-none rounded-md ml-2 accent-black ' type="range" />
               </div>
 
             </div>
