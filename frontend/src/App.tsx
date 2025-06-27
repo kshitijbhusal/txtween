@@ -10,7 +10,19 @@ const App = () => {
   const [bgRemovedImg, setBgRemovedImg] = useState()
 
   const { image, setImage }: any = useContext(ImageContext)
-  const [actualImg, setActualImg] = useState()
+  const [actualImg, setActualImg] = useState(null)
+
+  //----------Controllers States
+
+  const [text, setText] = useState("")
+  const [fontSize, setFontSize] = useState("")
+  const [textColor, setTextColor] = useState("")
+  console.log(fontSize)
+
+
+
+  //-----------Handle Functions
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -43,30 +55,31 @@ const App = () => {
     <>
       <section className='h-screen flex justify-center items-center bg-zinc-900 text-white'>
 
-        {bgRemovedImg && actualImg ? (<form action="post" encType='multipart/form-data' onSubmit={handleSubmit} className=' border-1 border-slate-500 rounded-lg drop-shadow-blue-400 drop-shadow-2xl'   >
+        {actualImg ? (
+          <form action="post" encType='multipart/form-data' onSubmit={handleSubmit} className=' border-1 border-slate-500 rounded-lg drop-shadow-blue-400 drop-shadow-2xl'   >
 
-          <div className='p-6 flex flex-col justify-between items-center'>
+            <div className='p-6 flex flex-col justify-between items-center'>
 
-            <div className='relative'>
-              <input className=" rounded-md h-80 " placeholder='none' onChange={(e: any) => {
-                setImage(e.target.files[0])
-              }} name="image" type="file" />
-              <FileUp className='-z-[10] absolute top-[40%] right-[30%] ' size={100} strokeWidth={1.5} absoluteStrokeWidth />
+              <div className='relative'>
+                <input className=" rounded-md h-80 " placeholder='none' onChange={(e: any) => {
+                  setImage(e.target.files[0])
+                }} name="image" type="file" />
+                <FileUp className='-z-[10] absolute top-[40%] right-[30%] ' size={100} strokeWidth={1.5} absoluteStrokeWidth />
+              </div>
+              <button className='border-1 border-slate-600 w-fit  text-white text-base rounded-md px-2 py1 cursor-pointer'>Submit</button>
             </div>
-            <button className='border-1 border-slate-600 w-fit  text-white text-base rounded-md px-2 py1 cursor-pointer'>Submit</button>
-          </div>
 
 
 
-        </form>
+          </form>
         ) : <div className=' h-[80%] bg-slate-100 w-[60%] flex rounded-md p-4 '>
 
 
-          <div className=' bg-re-500 relative  w-1/2 p-4 overflow-hidden z-0'>
+          <div className=' bg-zinc-400 relative  w-1/2 p-4 overflow-hidden z-0'>
 
             {/* Text in middle */}
             <div className='z-2 absolute top-22  ' >
-              <h1 className='text-yellow-500 text-[120px] font-bold  inline-block leading-30  stroke-1 '>STEEZ CODES </h1>
+              <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}` }} className={`font-bold inline-block leading-[100px] stroke-[1]`}>{text} </h1>
             </div>
 
             {/* Acutal Image */}
@@ -80,19 +93,25 @@ const App = () => {
           <div className='w-1/2 bg-geen-500 p-4 flex flex-col justify-between items-end '>
             <div className='flex flex-col gap-y-2' >
               <div>
+                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Text</label>
+                <input onChange={(e) => { setText(e.target.value) }} className='border-1 border-black  text-black outline-none rounded-md' type="text" />
+              </div>
+              <div>
                 <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Fonts</label>
                 <input className='border-1 border-black  text-black outline-none rounded-md' type="text" />
               </div>
 
-              <div>
-                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Text</label>
-                <input className='border-1 border-black  text-black outline-none rounded-md' type="text" />
-              </div>
 
               <div>
                 <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Color</label>
-                <input className='border-1 border-black  text-black outline-none rounded-md' type="text" />
+                <input onChange={(e) => setTextColor(e.target.value)} className='border-1 border-black  text-black outline-none rounded-md' type="color" />
               </div>
+
+              <div>
+                <label className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900' htmlFor="">Font Size</label>
+                <input onChange={(e) => setFontSize(e.target.value + "px")} className='border-1 border-black  text-black outline-none rounded-md' type="range" />
+              </div>
+
             </div>
             <div>
               <button className='bg-black text-white px-2 py-1 rounded-md border-none hover:bg-slate-900'>Download</button>
