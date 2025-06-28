@@ -40,8 +40,8 @@ router.post("/upload", upload.single('image'), async (req, res, next) => {
     const actualImg = buffer?.toString("base64")
     // fs.writeFileSync("no-bg.png", Buffer.from(rbgResultData));
     res.json({
-        message: imgBase,
-        actualImg
+        bgRemoved: imgBase,
+        actualImg: actualImg
 
     })
 }
