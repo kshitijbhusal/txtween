@@ -70,6 +70,14 @@ const App = () => {
 
     //-----------Handle Functions
 
+    const handleFileInput = (e: any) => {
+
+        setImage(e.target.files[0])
+        handleSubmit(e)
+
+    }
+
+
     const handleReset = () => {
         setText("");
         setFontSize("100px");
@@ -171,27 +179,25 @@ const App = () => {
 
     return (
         <>
-            <section className='h-screen w-screen  flex justify-center items-center bg-zinc-800 text-white'>
+            <section className='h-screen w-screen  flex justify-center items-center bg-slate-100  text-black'>
 
                 {!actualImg ? (
-                    <div>
-                        <div className=' bg-slate-600/20 hover:bg-slate-400/20  pl-1 pr-3 py-1 w-fit rounded-md mb-1 '>
+                    <div className=' flex flex-col item justify-center   '>
+                        <div className='dark:bg-slate-600/20 hover:bg-slate-400/20 bg-slate-200 text-black  pl-1 pr-3 py-1 w-fit rounded-md mb-1   '>
                             <button onClick={handleBackBtn} className='flex  font-bold items-center cursor-pointer '><span> {backLoading ? <LoaderCircle size={20} className='animate-spin mr-1' /> : <ChevronLeft />} </span><span>Back</span></button>
                         </div>
 
-                        <form action="post" encType='multipart/form-data' onSubmit={handleSubmit} className=' border-2 border-slate-500 rounded-lg drop-shadow-blue-400 drop-shadow-2xl'   >
+                        <form action="post" encType='multipart/form-data' onChange={handleSubmit} className='shadow-zinc-500 shadow-2xl  drop-shadow-blue-400 drop-shadow-2xl w-fit mx-auto rounded-2xl '   >
 
-                            <div className='p-6 flex flex-col justify-between items-center'>
+                            <div className=' flex flex-col justify-between items-center '>
 
                                 <div className='relative'>
-                                    <input className=" rounded-md h-80 " placeholder='none' onChange={(e: any) => {
-                                        setImage(e.target.files[0])
-                                    }} name="image" type="file" />
+                                    <input className="  rounded-md h-70 w-60 border-none opacity-0 " placeholder='none' onChange={handleFileInput} name="image" type="file" />
                                     {uploadLoading ? < LoaderCircle className='-z-[10] absolute top-[40%] right-[30%] animate-spin  ' size={100} strokeWidth={2} absoluteStrokeWidth /> :
 
                                         <FileUp className='-z-[10] absolute top-[40%] right-[30%]  ' size={100} strokeWidth={1.5} absoluteStrokeWidth />}
                                 </div>
-                                <button className='border-1 border-slate-600 w-fit  text-white text-base rounded-md px-2 py1 cursor-pointer'>Submit</button>
+                                {/* <button className='border-1 border-slate-600 w-fit  text-black text-base rounded-md px-2 py1 cursor-pointer'>Submit</button> */}
                             </div>
 
                         </form>
