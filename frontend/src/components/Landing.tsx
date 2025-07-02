@@ -4,6 +4,11 @@ import Image1 from "../assets/img_txtween (16)sjdsd.png"
 import Image2 from "../assets/img_txtween (13).png"
 import Image3 from "../assets/seedhe maut dl91.png"
 import stan from "../assets/mc stan.png"
+import virat from "../assets/virat 2.png"
+import yabi from "../assets/yabi2.png"
+import luke from "../assets/matrix.png"
+
+
 import { Link, useNavigate } from 'react-router-dom'
 import { GridPatternLinearGradient } from './GradientBackground'
 import { Github } from 'lucide-react';
@@ -15,15 +20,16 @@ const App = () => {
     const navigate = useNavigate()
     return (
         <>
-            <div className='h-screen w-screen  bg-transparent text-black'>
+            <div className=' w-screen text-black'>
 
 
 
-                <div className='relative '>
+                <div className='relative  '>
 
-                    <div className='absolute -z-[2] w-full h-full inset-0 bg-white  '>
+                    <div className='absolute -z-[2] w-full inset-0 bg-slate-100  '>
 
                         <GridPatternLinearGradient />
+
                     </div>
 
                     <div className='h-[80px] backdrop-blur-xl  flex items-center   ' >
@@ -57,7 +63,7 @@ const App = () => {
 
                         <div className=" w-full  flex items-center justify-center gap-x-4 ">
 
-                            <div className="w-50 blur- hover:animate-pulse opacity-50 transition-all duration-300">
+                            <div className="w-50 blur- hover:animate-pulse opacity-100 transition-all duration-300 hidden ">
                                 <img src={Image1} alt="Side Image" className="rounded-lg" />
                             </div>
 
@@ -67,11 +73,28 @@ const App = () => {
                             </div>
 
 
-                            <div className="w-50 blur- hover:animate-pulse opacity-50 transition-all duration-300">
+                            <div className="w-50 blur- hover:animate-pulse opacity-100 transition-all duration-300">
                                 <img src={Image3} alt="Side Image" className="rounded-lg" />
                             </div>
-                        </div>
 
+                            <div className="w-72 scale-80 hover:animate-pulse z-10 transition-all duration-300">
+                                <img src={virat} alt="Center Image" className="rounded-xl shadow-lg" />
+                            </div>
+
+                            <div className="w-50 blur- hover:animate-pulse opacity-100 transition-all duration-300">
+                                <img src={luke} alt="Side Image" className="rounded-lg" />
+                            </div>
+
+
+
+
+
+                            <div className="w-50 blur- hover:animate-pulse opacity-100 transition-all duration-300 hidden">
+                                <img src={yabi} alt="Side Image" className="rounded-lg" />
+                            </div>
+
+
+                        </div>
 
 
 

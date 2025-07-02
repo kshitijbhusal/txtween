@@ -131,6 +131,7 @@ const App = () => {
 
 
         } catch (error) {
+            console.log(error)
 
         }
 
@@ -179,7 +180,7 @@ const App = () => {
 
     return (
         <>
-            <section className='h-screen w-screen  flex justify-center items-center bg-slate-100  text-black'>
+            <section className='  md:h-screen w-screen  flex justify-center items-center bg-slate-100  text-black'>
 
                 {!actualImg ? (
                     <div className=' flex flex-col item justify-center   '>
@@ -238,7 +239,7 @@ const App = () => {
 
 
                             {/* -------------------The two main divs ----------------------*/}
-                            <div className='w- h-fit bg-geen-500 flex justify-around items-center '>
+                            <div className=' md:h-fit bg-geen-500 md:flex justify-around items-center overflow-scroll '>
 
 
                                 {/* ----------------------------Image Div-------------------------------------- */}
@@ -262,7 +263,7 @@ const App = () => {
 
                                 {/* ----------------------------Controllers Div-------------------------------------- */}
 
-                                <div className='bg-slae-800 text-slate-400 w-1/2  py-4 bg-rd-500  pl-12 flex flex-col justify-between items-start   '>
+                                <div className='bg-slae-800 text-slate-400 w-1/2  py-4 bg-rd-500  pl-12 flex flex-col justify-between items-start overflow-y-   '>
 
                                     <div className='flex flex-col gap-y-8  bg-rd-500 ' >
                                         <div className=' flex gap-x-8'>
