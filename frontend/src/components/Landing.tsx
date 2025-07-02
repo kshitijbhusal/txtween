@@ -1,7 +1,7 @@
-import React from 'react'
+
 //-------------Image imports
 import Image1 from "../assets/img_txtween (16)sjdsd.png"
-import Image2 from "../assets/img_txtween (13).png"
+
 import Image3 from "../assets/seedhe maut dl91.png"
 import stan from "../assets/mc stan.png"
 import virat from "../assets/virat 2.png"

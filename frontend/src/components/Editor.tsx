@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { FileUp, Target } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react'
+import { FileUp } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react'
 // import { Input } from './components/ui/input'
 import { useContext } from 'react';
 import { ImageContext } from '../contexts/ImageContext';
 import html2canvas from 'html2canvas';
 
 //--------------Types Imports
-import { type CSSProperties } from 'react';
 
 //---------------Lucide Imports
 import { AlignLeft } from 'lucide-react';
