@@ -119,7 +119,7 @@ const App = () => {
 
         try {
 
-            const response = await axios.post("http://localhost:3000/v1/upload", formData, {
+            const response = await axios.post(import.meta.env.VITE_BACKEND_URL, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -180,7 +180,7 @@ const App = () => {
 
     return (
         <>
-            <section className='  md:h-screen w-screen  flex justify-center items-center bg-slate-100  text-black'>
+            <section style={{ height: "100vh" }} className='   md:h-screen w-screen  md:flex  flex-col justify-center items-center bg-slate-100  text-black'>
 
                 {!actualImg ? (
                     <div className=' flex flex-col item justify-center   '>
