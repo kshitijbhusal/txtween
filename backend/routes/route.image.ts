@@ -1,8 +1,9 @@
-import fs from "node:fs";
+
 import { Blob } from 'buffer';
 import express from 'express';
 
 import multer from 'multer'
+import { error, log } from 'node:console';
 const router = express.Router();
 
 const storage = multer.memoryStorage()
@@ -17,9 +18,12 @@ router.post("/upload", upload.single('image'), async (req, res, next) => {
 
 
     async function removeBg(blob: any) {
+
+
         const formData = new FormData();
         formData.append("size", "auto");
         formData.append("image_file", blob);
+
 
         const response = await fetch("https://api.remove.bg/v1.0/removebg", {
             method: "POST",
@@ -30,6 +34,7 @@ router.post("/upload", upload.single('image'), async (req, res, next) => {
         if (response.ok) {
             return await response.arrayBuffer();
         } else {
+            console.log(error)
             throw new Error(`${response.status}: ${response.statusText}`);
         }
     }

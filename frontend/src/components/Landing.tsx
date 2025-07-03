@@ -47,7 +47,7 @@ const App = () => {
                             <h1 className='md:text-4xl text-2xl font-bold mt-6 mb-2  text-center'>
                                 Create <span className='text-yellow-400'>Astonishing</span> Image with <span className=' '>txtween</span>.
                             </h1>
-                            <p className='bg-re-500 md:text-base text-xs text-center md:font-semibold '>Add eye-catching text between your photo's background and subject. <br /> Perfect for boosting 🚀 views and impressions on social media.</p>
+                            <p className='bg-re-500 md:text-base text-xs text-center font-semibold '>Add eye-catching text between your photo's. <br /> Perfect for boosting 🚀 views and impressions on social media.</p>
 
                             <button onClick={() => {
                                 navigate("./editor")

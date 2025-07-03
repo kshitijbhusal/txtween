@@ -1,5 +1,6 @@
 
 
+// import Editor from './components/Editor'
 import Editor from './components/Editor'
 import Landing from './components/Landing'
 import { BrowserRouter, Routes, Route } from "react-router-dom";

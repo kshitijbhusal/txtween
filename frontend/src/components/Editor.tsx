@@ -6,6 +6,8 @@ import { useContext } from 'react';
 import { ImageContext } from '../contexts/ImageContext';
 import html2canvas from 'html2canvas';
 
+import useUpdateEffect from '../lib/effect'
+
 //--------------Types Imports
 
 //---------------Lucide Imports
@@ -27,12 +29,18 @@ const App = () => {
 
     //---------------Other States
     const [bgRemovedImg, setBgRemovedImg] = useState("")
+    interface ImageContextType {
+        image: File | null;
+        setImage: (file: File) => void;
+    }
+    // const { image, setImage } = useContext(ImageContext) as ImageContextType;
 
-    const { image, setImage }: any = useContext(ImageContext)
+    const [image, setImage] = useState("")
     const [actualImg, setActualImg] = useState("")
 
     const [uploadLoading, setUploadLoading] = useState(false)
     const [backLoading, setBackLoading] = useState(false)
+    const [textLoading, setTextLoading] = useState(false)
 
     //----------Controllers States
 
@@ -42,7 +50,7 @@ const App = () => {
     const [vertical, setVertical] = useState("")
     const [horizontal, setHorizontal] = useState("")
     const [font, setFont] = useState("")
-    const [textAlign, setTextAlign] = useState<TextAlign>()
+    const [textAlign, setTextAlign] = useState<TextAlign>("left")
     const [lineHeight, setLineHeight] = useState("")
     const [dimenssion, setDimenssion] = useState({ imgWidth: 0, imgHeight: 0 })
     const [bgColor, setBgColor] = useState("white")
@@ -50,6 +58,8 @@ const App = () => {
     const [actualImgHide, setActualImgHide] = useState(false)
 
     const [isBgSolid, setBgSolid] = useState(false);
+
+    const [uploadErr, setUploadErr] = useState(false)
 
 
     const navigate = useNavigate();
@@ -67,14 +77,7 @@ const App = () => {
 
     }, [bg])
 
-    //-----------Handle Functions
 
-    const handleFileInput = (e: any) => {
-
-        setImage(e.target.files[0])
-        handleSubmit(e)
-
-    }
 
 
     const handleReset = () => {
@@ -84,20 +87,21 @@ const App = () => {
         setVertical("")
         setHorizontal("")
         setFont("")
-        // const [textAlign, setTextAlign] = useState<TextAlign>()
+
         setLineHeight("")
-        // const [dimenssion, setDimenssion] = useState({ imgWidth: 0, imgHeight: 0 })
+
         setBgColor("white")
         setBg("image")
-        // const [actualImgHide, setActualImgHide] = useState(false)
 
-        // const [isBgSolid, setBgSolid] = useState(false);
+
+
 
     }
     const handleBackBtn = () => {
         setBackLoading(true)
         setTimeout(() => {
             handleReset()
+
             setActualImg("")
             setBgRemovedImg("")
             navigate("../")
@@ -107,13 +111,36 @@ const App = () => {
 
     }
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
+    //-----------Handle Functions
+
+
+
+    const handleFileInput = (e: any) => {
+
+
+        setImage(e.target.files[0])
+        // console.log(e.target.files[0]
+
+    }
+
+    useUpdateEffect(() => {
+        handleSubmit()
+    }, [image]);
+
+
+
+    const handleSubmit = async () => {
+
+        console.log("image", image)
+
         setUploadLoading(true)
+        setTextLoading(true)
 
         const formData = new FormData();
         if (image) {
+            // console.log(image)
             formData.append('image', image)
+
         }
 
         try {
@@ -124,12 +151,17 @@ const App = () => {
                 }
             })
             if (response)
-                setBgRemovedImg(response.data.bgRemoved)
+                console.log(response.data)
+            setBgRemovedImg(response.data.bgRemoved)
             setActualImg(response.data.actualImg)
             setUploadLoading(false)
+            setTextLoading(false)
 
 
         } catch (error) {
+            setUploadErr(true)
+            setUploadLoading(false)
+            setTextLoading(false)
             console.log(error)
 
         }
@@ -150,7 +182,7 @@ const App = () => {
             const canvas = await html2canvas(divRef.current, {
                 allowTaint: true,
                 useCORS: true,
-                scale: 2
+                scale: 4
             })
 
             const link = document.createElement('a');
@@ -179,28 +211,33 @@ const App = () => {
 
     return (
         <>
-            <section style={{ height: "100vh" }} className='   md:h-screen w-screen  md:flex  flex-col justify-center items-center bg-slate-100  text-black'>
+            <section style={{ height: "fit" }} className='   md:h-screen w-screen  md:flex  flex-col justify-center items-center bg-slate-100  text-black'>
 
                 {!actualImg ? (
-                    <div className=' flex flex-col item justify-center   '>
-                        <div className='dark:bg-slate-600/20 hover:bg-slate-400/20 bg-slate-200 text-black  pl-1 pr-3 py-1 w-fit rounded-md mb-1   '>
-                            <button onClick={handleBackBtn} className='flex  font-bold items-center cursor-pointer '><span> {backLoading ? <LoaderCircle size={20} className='animate-spin mr-1' /> : <ChevronLeft />} </span><span>Back</span></button>
-                        </div>
+                    <div className=' flex flex-col   items-center h-full justify-center  '>
 
-                        <form action="post" encType='multipart/form-data' onChange={handleSubmit} className='shadow-zinc-500 shadow-2xl  drop-shadow-blue-400 drop-shadow-2xl w-fit mx-auto rounded-2xl '   >
 
-                            <div className=' flex flex-col justify-between items-center '>
+                        <form action="post" encType='multipart/form-data' onChange={(e) => {
+                            handleFileInput(e)
+                        }} className='shadow-zinc-500 shadow-xs   w-fit mx-auto rounded-2xl  '   >
 
-                                <div className='relative'>
-                                    <input className="  rounded-md h-70 w-60 border-none opacity-0 " placeholder='none' onChange={handleFileInput} name="image" type="file" />
+                            <div className=' flex flex-col justify-around items-center '>
+                                <div className='relative z-0'>
+                                    <input className="rounded-md h-70 w-60 border-none opacity-0 " placeholder='none' name="image" type="file" />
                                     {uploadLoading ? < LoaderCircle className='-z-[10] absolute top-[40%] right-[30%] animate-spin  ' size={100} strokeWidth={2} absoluteStrokeWidth /> :
 
                                         <FileUp className='-z-[10] absolute top-[40%] right-[30%]  ' size={100} strokeWidth={1.5} absoluteStrokeWidth />}
                                 </div>
+
+                                {textLoading && <p className='relative bottom-2 text-slate-600 animate-pulse'>Processing Image</p>}
+                                {uploadErr && <p className='relative bottom-2 text-red-500/80'>*Error while uploading Image</p>}
                                 {/* <button className='border-1 border-slate-600 w-fit  text-black text-base rounded-md px-2 py1 cursor-pointer'>Submit</button> */}
                             </div>
 
                         </form>
+                        <div className='dark:bg-slate-600/20 hover:bg-slate-400/20 bg-slate-200 text-black  pl-1 pr-3 py-1 w-fit rounded-md mt-2   '>
+                            <button onClick={handleBackBtn} className='flex  font-bold items-center cursor-pointer '><span> {backLoading ? <LoaderCircle size={20} className='animate-spin mr-1' /> : <ChevronLeft />} </span><span>Back</span></button>
+                        </div>
                     </div>
 
                 ) : <div className=' w-full h-full bg-green-400 flex flex-col items-center justify-center  rounded-md  '>
@@ -238,16 +275,19 @@ const App = () => {
 
 
                             {/* -------------------The two main divs ----------------------*/}
-                            <div className=' md:h-fit bg-geen-500 md:flex justify-around items-center overflow-scroll '>
+                            <div className=' md:h-fit bg-geen-500 md:flex justify-around items-center '>
 
 
                                 {/* ----------------------------Image Div-------------------------------------- */}
-                                <div ref={divRef} style={{ background: `${bgColor}`, width: dimenssion.imgWidth, height: dimenssion.imgHeight }} className=' relative overflow-hidden z-0 drop-shadow-2xl drop-shadow-amber-500/50   '>
+                                <div ref={divRef} style={{ background: `${bgColor}`, width: dimenssion.imgWidth, height: dimenssion.imgHeight }} className=' relative overflow-hidden z-0   '>
 
                                     {/*--------------------- Text in middle----------------------------- */}
-                                    <div style={{ bottom: `${vertical}`, left: `${horizontal}`, textAlign: textAlign }} className='z-2 absolute ' >
-                                        <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontStyle: "normal", fontWeight: "bolder", lineHeight: `${lineHeight}` }} className=''>{text} </h1>
-                                    </div>
+                                    {/* <div style={{ bottom: `${vertical}`, left: `${horizontal}`, textAlign: textAlign }} className='z-2 absolute ' >
+                                        <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontStyle: "normal", fontWeight: "bolder" }} className=''>{text} </h1>
+                                    </div> */}
+
+                                    <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontWeight: "bolder", top: `${vertical}`, left: `${horizontal}`, margin: 0 }} className='z-2 absolute '>{text} </h1>
+
 
                                     {/* Acutal Image */}
                                     <img hidden={actualImgHide} style={{ width: dimenssion.imgWidth, height: dimenssion.imgHeight }} className='  absolute top-0 z-1  ' src={`data:image/jpeg;base64,${actualImg}`} alt="actualImg" />
