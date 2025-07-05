@@ -1,5 +1,5 @@
 import express from "express"
-import ImageRouter from "./routes/route.image.js"
+import ImageRouter from "./routes/route.image"
 import cors from 'cors';
 import dotenv from 'dotenv'
 const app = express();

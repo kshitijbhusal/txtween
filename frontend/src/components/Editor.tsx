@@ -2,8 +2,8 @@ import axios from 'axios';
 import { FileUp } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
 // import { Input } from './components/ui/input'
-import { useContext } from 'react';
-import { ImageContext } from '../contexts/ImageContext';
+// import { useContext } from 'react';
+// import { ImageContext } from '../contexts/ImageContext';
 import html2canvas from 'html2canvas';
 
 import useUpdateEffect from '../lib/effect'
