@@ -34,7 +34,7 @@ const App = () => {
 
                     <div className='h-[80px] backdrop-blur-xl  flex items-center   ' >
                         <header className=' w-[90%] mx-auto  flex justify-between items-center py-2  drop-shadow-slate-400 drop-shadow-3xl'>
-                            <h1 className='text-3xl text-yelow-400 font-extrabold font-[Outfit] '>textween</h1>
+                            <h1 className='text-3xl text-yelow-400 font-extrabold font-[Outfit] bg-gradient-to-r from-yellow-800 to-blue-500 text-transparent bg-clip-text '>textween</h1>
 
                             <button className='bg-slate-200 hover:bg-black/20 hover:text-white text-black text-base font-semibold cursor-pointer  px-1.5 py-1.5 rounded-full '> <Link to={"http://github.com/kshitijbhusal"} target='_blank'> <Github size={20} /></Link> </button>
 

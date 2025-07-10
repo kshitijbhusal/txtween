@@ -286,7 +286,7 @@ const App = () => {
                                         <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontStyle: "normal", fontWeight: "bolder" }} className=''>{text} </h1>
                                     </div> */}
 
-                                    <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontWeight: "bolder", top: `${vertical}`, left: `${horizontal}`, margin: 0 }} className='z-2 absolute '>{text} </h1>
+                                    <h1 style={{ fontSize: `${fontSize}`, color: `${textColor}`, fontFamily: `${font}`, fontWeight: "bolder", top: `${vertical}`, left: `${horizontal}`, position: 'absolute', lineHeight: 1, margin: 0 }} className='z-2  '>{text} </h1>
 
 
                                     {/* Acutal Image */}

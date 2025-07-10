@@ -11,7 +11,7 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage })
 
 
-router.post("/upload", upload.single('image'), async (req, res, next) => {
+router.post("/upload", upload.single('image'), async (req: any, res: any, next: any) => {
 
 
     const buffer: any = req.file?.buffer
