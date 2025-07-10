@@ -3,13 +3,11 @@ import { Blob } from 'buffer';
 import express from 'express';
 
 import multer from 'multer'
-import { error, log } from 'node:console';
 const router = express.Router();
 
 const storage = multer.memoryStorage()
 
 const upload = multer({ storage })
-
 
 router.post("/upload", upload.single('image'), async (req: any, res: any, next: any) => {
 
@@ -34,7 +32,7 @@ router.post("/upload", upload.single('image'), async (req: any, res: any, next: 
         if (response.ok) {
             return await response.arrayBuffer();
         } else {
-            console.log(error)
+
             throw new Error(`${response.status}: ${response.statusText}`);
         }
     }
