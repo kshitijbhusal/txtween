@@ -29,11 +29,7 @@ const App = () => {
 
     //---------------Other States
     const [bgRemovedImg, setBgRemovedImg] = useState("")
-    interface ImageContextType {
-        image: File | null;
-        setImage: (file: File) => void;
-    }
-    // const { image, setImage } = useContext(ImageContext) as ImageContextType;
+
 
     const [image, setImage] = useState("")
     const [actualImg, setActualImg] = useState("")
@@ -62,6 +58,12 @@ const App = () => {
     const [uploadErr, setUploadErr] = useState(false)
 
 
+
+
+    if (true) {
+        textAlign;
+        lineHeight
+    }
     const navigate = useNavigate();
     // I sohould keep the if else inside useEffect
 
